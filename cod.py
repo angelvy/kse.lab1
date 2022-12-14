@@ -31,7 +31,20 @@ def task_1():
                     bronze_med += 1
                 if gold_med + silver_med + bronze_med <= 10:
                     print(f"{name} - {sport} - {medals}")
-                    list_str.append(f"{name} - {sport} - {medals}")
+                    result = []
+                    result.append(f"{name} - {sport} - {medals}")
+
+            if medals == "NA\n":
+                continue
+
+        if 0 < gold_med + silver_med + bronze_med < 10:
+            print("Медалей менше ніж 10")
+        if gold_med + silver_med + bronze_med == 0:
+            print("У країни відсутні медалі у даний рік")
+            exit()
+        print(f"{gold_med} золотих медалей, {silver_med} срібних медалей, {bronze_med} бронзових медалей")
+        result.append(f"{gold_med} золотих медалей, {silver_med} срібних медалей, {bronze_med} бронзових медалей")
+
 
 
 
