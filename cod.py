@@ -22,6 +22,20 @@ def task_1():
             year = line_split[9]
             team = line_split[6]
 
+            if country_arg == team and year_arg == year:
+                if medals == "Gold\n":
+                    gold_med += 1
+                if medals == "Silver\n":
+                    silver_med += 1
+                if medals == "Bronze\n":
+                    bronze_med += 1
+                if gold_med + silver_med + bronze_med <= 10:
+                    print(f"{name} - {sport} - {medals}")
+                    list_str.append(f"{name} - {sport} - {medals}")
+
+
+
+
 
 
 
