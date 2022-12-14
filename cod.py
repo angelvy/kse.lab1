@@ -1,8 +1,8 @@
 import sys
 
 def task_1():
-    country = sys.argv[3]
-    year = sys.argv[4]
+    country_arg = sys.argv[3]
+    year_arg = sys.argv[4]
 
     gold_med = 0
     silver_med = 0
@@ -14,6 +14,17 @@ def task_1():
             line = file.readlines()
             if not line:
                 break
+
+            line_split = line.split("\t")
+            name = line_split[1]
+            sport = line_split[12]
+            medals = line_split[14]
+            year = line_split[9]
+            team = line_split[6]
+
+
+
+
 
 
 
