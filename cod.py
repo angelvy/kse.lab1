@@ -53,3 +53,33 @@ if command == "-medals":
                 print("ця країна не існує")
 
             print(f"{gold_med} золотих медалей, {silver_med} срібних медалей, {bronze_med} бронзових медалей")
+
+
+elif command == "-total":
+    year_arg = sys.argv[3]
+    result = {}  # словник
+
+    with open(sys.argv[1], 'r') as file:    #відкриваємо наш початковий файл і кажемо що далі від буде називатись 'file'
+        file.readline()
+        line = file.readline()
+
+        for line in file:
+            line_split = line.split("\t")
+            medals = line_split[14]
+            year = line_split[9]
+            team = line_split[6]
+
+            if year_arg == year and medals != "NA\n":
+                result.setdefault(team, [0, 0, 0])    # визиваємо зі словника результату країну
+                if medals == 'Gold\n':
+                    result[team][0] += 1
+                elif medals == 'Silver\n':
+                    result[team][1] += 1
+                elif medals == 'Bronze\n':
+                    result[team][2] += 1
+
+        for key, value in result.items():   #key це країна, value це медалі
+            value = [str(i) for i in value]    #
+            answer = key + ' - ' + ' - '.join(value)
+            print(answer)
+
