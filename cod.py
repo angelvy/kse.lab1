@@ -59,27 +59,34 @@ elif command == "-total":
     year_arg = sys.argv[3]
     result = {}  # словник
 
-    with open(sys.argv[1], 'r') as file:    #відкриваємо наш початковий файл і кажемо що далі від буде називатись 'file'
+    with open(sys.argv[1], 'r') as file: #відкриваємо наш початковий файл і кажемо що далі від буде називатись 'file'
         file.readline()
         line = file.readline()
 
-        for line in file:
+        for line in file:        #запускаємо цикл який буде працювати поки не закінчаться рядки
             line_split = line.split("\t")
             medals = line_split[14]
             year = line_split[9]
             team = line_split[6]
 
             if year_arg == year and medals != "NA\n":
-                result.setdefault(team, [0, 0, 0])    # визиваємо зі словника результату країну
-                if medals == 'Gold\n':
+                if team not in result:
+                    result[team] = [0, 0, 0]
+                elif medals == 'Gold\n':
                     result[team][0] += 1
                 elif medals == 'Silver\n':
                     result[team][1] += 1
                 elif medals == 'Bronze\n':
                     result[team][2] += 1
+        line = file.readline()
 
-        for key, value in result.items():   #key це країна, value це медалі
-            value = [str(i) for i in value]    #
-            answer = key + ' - ' + ' - '.join(value)
-            print(answer)
+        for country, medal in result.items():
+            if medal != [0, 0, 0]:      #якщо у країни не нуль медалей то ми їх принтуємо
+                print(f"{country} - gold - {medal[0]}, silver {medal[1]}, bronze - {medal[2]}")
+
+
+
+
+
+
 
