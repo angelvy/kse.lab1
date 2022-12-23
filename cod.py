@@ -73,20 +73,63 @@ elif command == "-total":
                 if team not in result:
                     result[team] = [0, 0, 0]
                 elif medals == 'Gold\n':
-                    result[team][0] += 1
+                    result[team][0] += 1     #у списку резалта звертаємось до окремої країни і її індексів
                 elif medals == 'Silver\n':
                     result[team][1] += 1
                 elif medals == 'Bronze\n':
                     result[team][2] += 1
         line = file.readline()
 
-        for country, medal in result.items():
+        for country, medal in result.items():   #звертаємось до словника щоб він нам видав
             if medal != [0, 0, 0]:      #якщо у країни не нуль медалей то ми їх принтуємо
                 print(f"{country} - gold - {medal[0]}, silver {medal[1]}, bronze - {medal[2]}")
 
 
+elif command == "-overall":
+    country_arg = sys.argv[3:]
+    result = {}
+    for country in country_arg:
+        with open(sys.argv[1], 'r') as file: #відкриваємо наш початковий файл і кажемо що далі від буде називатись 'file'
+            line = file.readline()
+            for line in file:
+                line_split = line.split("\t")
+                medals = line_split[14]
+                year = line_split[9]
+                noc = line_split[7]
+                if year not in result and noc == country:
+                    result[year] = 0    #робимо нульовий індекс
+                if year in result and medals != "NA\n" and noc == country:
+                    result[year] += 1    #якщо все що прописано вище є - додаємо
+                line = file.readline()
+
+        #ключі це роки, а value це медалі
+        result_key = [int(key) for key in result.keys()]
+        result_values = [int(value) for value in result.values()]
+        maximum = max(result_values)   #шукає максимальну кількість медалей
+        print(f"{country} - {maximum} - {result_key[result_values.index(maximum)]}")   #витягує індекс максимальних медалей і звіряється з роком
 
 
 
+elif command == "-overall":
+    country_arg = sys.argv[3:]
+    result = {}    #словник
+    for country in country_arg:
+        with open(sys.argv[1], 'r') as file: #відкриваємо наш початковий файл і кажемо що далі від буде називатись 'file'
+            line = file.readline()
+            for line in file:
+                line_split = line.split("\t")
+                medals = line_split[14]
+                year = line_split[9]
+                noc = line_split[7]
+                if year not in result and noc == country:
+                    result[year] = 0    #робимо нульовий індекс
+                if year in result and medals != "NA\n" and noc == country:
+                    result[year] += 1    #якщо все що прописано вище є - додаємо
+                line = file.readline()
 
+        #ключі це роки, а value це медалі
+        result_key = [int(key) for key in result.keys()]
+        result_values = [int(value) for value in result.values()]
+        maximum = max(result_values)   #шукає максимальну кількість медалей
+        print(f"{country} - {maximum} - {result_key[result_values.index(maximum)]}")   #витягує індекс максимальних медалей і звіряється з роком
 
